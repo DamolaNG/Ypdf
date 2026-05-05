@@ -28,13 +28,27 @@ namespace YpdfLib.Compressors
             string qualityFactor = ConvertFloatToString(compression.QualityFactor);
 
             string pythonImageCompressorPath = SharedConfig.Scripts.PythonImageCompressor;
-            string args = $"{pythonImageCompressorPath} -i {inputFile} -o {destPath} -q {qualityFactor} -s {sizeFactor}";
+
+            var args = new List<string>
+            {
+                pythonImageCompressorPath,
+                "-i", inputFile,
+                "-o", destPath,
+                "-q", qualityFactor,
+                "-s", sizeFactor
+            };
 
             if (compression.Width is not null)
-                args += $" -W {compression.Width}";
+            {
+                args.Add("-W");
+                args.Add(compression.Width.ToString()!);
+            }
 
             if (compression.Height is not null)
-                args += $" -H {compression.Height}";
+            {
+                args.Add("-H");
+                args.Add(compression.Height.ToString()!);
+            }
 
             executor.Execute(args);
         }
@@ -59,19 +73,27 @@ namespace YpdfLib.Compressors
             if (!string.IsNullOrEmpty(pythonAlias))
                 executor.PythonAlias = pythonAlias;
 
-            if (string.IsNullOrEmpty(destDir))
-                destDir = "\"\"";
-
             string pythonImageCompressorPath = SharedConfig.Scripts.PythonImageCompressor;
 
             string sizeFactor = ConvertFloatToString(compression.SizeFactor);
             string qualityFactor = ConvertFloatToString(compression.QualityFactor);
 
-            string files = string.Join(' ', inputFiles);
-            string args = $"{pythonImageCompressorPath} -i {files} -O {destDir} -q {qualityFactor} -s {sizeFactor}";
+            var args = new List<string> { pythonImageCompressorPath, "-i" };
+            args.AddRange(inputFiles);
+
+            args.Add("-O");
+            args.Add(destDir ?? string.Empty);
+
+            args.Add("-q");
+            args.Add(qualityFactor);
+            args.Add("-s");
+            args.Add(sizeFactor);
 
             if (!string.IsNullOrEmpty(compression.Extension))
-                args += $" -e {compression.Extension}";
+            {
+                args.Add("-e");
+                args.Add(compression.Extension);
+            }
 
             executor.Execute(args);
         }

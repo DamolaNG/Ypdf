@@ -129,11 +129,14 @@
 					</i:Interaction.Behaviors>
 				</TextBlock>
 
-				<TextBox Grid.Row="0"
-						 Grid.Column="1"
-						 IsReadOnly="True"
-						 Margin="10, 0, 0, 0"
-						 Text="{Binding OutputFilePath}" />
+				<DockPanel Grid.Row="0" Grid.Column="1" Margin="10, 0, 0, 0">
+					<Button DockPanel.Dock="Right"
+							img:Attached.Icon="fa-folder-open"
+							Margin="5, 0, 0, 0"
+							ToolTip.Tip="{Binding SettingsVM.Locale.Output}"
+							Command="{Binding SelectOutputFilePathCommand}" />
+					<TextBox IsReadOnly="True" Text="{Binding OutputFilePath}" />
+				</DockPanel>
 			</Grid>
 
 			<Grid Grid.Row="1" ColumnDefinitions="1*, 1*">

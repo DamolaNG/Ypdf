@@ -5,6 +5,7 @@
 			 xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
 			 xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
 			 xmlns:idd="clr-namespace:Avalonia.Xaml.Interactions.DragAndDrop;assembly=Avalonia.Xaml.Interactions"
+			 xmlns:img="clr-namespace:Projektanker.Icons.Avalonia;assembly=Projektanker.Icons.Avalonia"
 			 xmlns:bt="using:YpdfDesktop.Infrastructure.Behaviors.Text"
 			 xmlns:bd="using:YpdfDesktop.Infrastructure.Behaviors.Drop"
 			 xmlns:vm="using:YpdfDesktop.ViewModels.Pages.Tools"
@@ -81,7 +82,20 @@
 		<TextBlock Grid.Row="8" Grid.Column="0" Text="{Binding SettingsVM.Locale.Extension}" />
 
 		<TextBox Grid.Row="0" Grid.Column="1" Classes="default" IsReadOnly="True" Text="{Binding InputFilePath}" />
+		<Button Grid.Row="0" Grid.Column="2"
+				img:Attached.Icon="fa-folder-open"
+				Margin="5, 0, 0, 0"
+				HorizontalAlignment="Left"
+				ToolTip.Tip="{Binding SettingsVM.Locale.File}"
+				Command="{Binding SelectInputFilePathCommand}" />
+
 		<TextBox Grid.Row="2" Grid.Column="1" Classes="default" IsReadOnly="True" Text="{Binding OutputFilePath}" />
+		<Button Grid.Row="2" Grid.Column="2"
+				img:Attached.Icon="fa-folder-open"
+				Margin="5, 0, 0, 0"
+				HorizontalAlignment="Left"
+				ToolTip.Tip="{Binding SettingsVM.Locale.Output}"
+				Command="{Binding SelectOutputFilePathCommand}" />
 
 		<NumericUpDown Grid.Row="4"
 				 	   Grid.Column="1"

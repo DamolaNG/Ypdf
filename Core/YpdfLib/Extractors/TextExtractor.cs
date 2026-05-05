@@ -43,7 +43,12 @@ namespace YpdfLib.Extractors
             if (!string.IsNullOrEmpty(pythonAlias))
                 executor.PythonAlias = pythonAlias;
 
-            executor.Execute($"{pythonTextExtractorPath} -i {inputFile} -o {destPath}");
+            executor.Execute(new[]
+            {
+                pythonTextExtractorPath,
+                "-i", inputFile,
+                "-o", destPath
+            });
         }
 
         private static string ExtractTextFromPage(PdfPage page)

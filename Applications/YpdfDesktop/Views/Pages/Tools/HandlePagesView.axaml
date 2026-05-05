@@ -216,15 +216,23 @@
 				    </i:Interaction.Behaviors>
 			    </TextBlock>
 
-                <TextBox Grid.Row="0"
-					     Grid.Column="1"
-					     IsReadOnly="True"
-					     Text="{Binding InputFilePath}" />
+                <DockPanel Grid.Row="0" Grid.Column="1">
+					<Button DockPanel.Dock="Right"
+							img:Attached.Icon="fa-folder-open"
+							Margin="5, 0, 0, 0"
+							ToolTip.Tip="{Binding SettingsVM.Locale.File}"
+							Command="{Binding SelectInputFilePathCommand}" />
+					<TextBox IsReadOnly="True" Text="{Binding InputFilePath}" />
+				</DockPanel>
 
-			    <TextBox Grid.Row="2"
-					     Grid.Column="1"
-					     IsReadOnly="True"
-					     Text="{Binding OutputFilePath}" />
+			    <DockPanel Grid.Row="2" Grid.Column="1">
+					<Button DockPanel.Dock="Right"
+							img:Attached.Icon="fa-folder-open"
+							Margin="5, 0, 0, 0"
+							ToolTip.Tip="{Binding SettingsVM.Locale.Output}"
+							Command="{Binding SelectOutputFilePathCommand}" />
+					<TextBox IsReadOnly="True" Text="{Binding OutputFilePath}" />
+				</DockPanel>
 
 				<Grid Grid.Row="4"
 					  Grid.ColumnSpan="2"

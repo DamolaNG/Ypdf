@@ -49,6 +49,40 @@ namespace RuntimeLib.Python
             ExecuteProcess(process);
         }
 
+        public void Execute(IEnumerable<string> args)
+        {
+            string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+            string workingDirectory = Path.GetDirectoryName(assemblyLocation) ?? Directory.GetCurrentDirectory();
+
+            Execute(args, workingDirectory);
+        }
+
+        public void Execute(IEnumerable<string> args, string workingDirectory)
+        {
+            VerifyPythonVersion();
+
+            var startInfo = new ProcessStartInfo()
+            {
+                FileName = PythonAlias,
+                WorkingDirectory = workingDirectory,
+
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardError = RedirectStandardError,
+                RedirectStandardOutput = RedirectStandardOutput
+            };
+
+            foreach (string arg in args)
+                startInfo.ArgumentList.Add(arg);
+
+            var process = new Process()
+            {
+                StartInfo = startInfo
+            };
+
+            ExecuteProcess(process);
+        }
+
         private void VerifyPythonVersion()
         {
             if (!CheckPythonIsInstalled && !RequirePython3)

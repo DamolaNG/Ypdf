@@ -17,10 +17,6 @@ namespace YpdfLib.Extractors
             if (inputFiles.Length == 0)
                 return;
 
-            if (string.IsNullOrEmpty(destDir))
-                destDir = "\"\"";
-
-            string paths = string.Join(' ', inputFiles);
             string pythonImageExtractorPath = SharedConfig.Scripts.PythonImageExtractor;
 
             var executor = new PythonExecutor(true, true, outputWriter)
@@ -33,7 +29,16 @@ namespace YpdfLib.Extractors
             if (!string.IsNullOrEmpty(pythonAlias))
                 executor.PythonAlias = pythonAlias;
 
-            executor.Execute($"{pythonImageExtractorPath} -l {extractedImagesLimit} -o {destDir} -i {paths}");
+            var args = new List<string>
+            {
+                pythonImageExtractorPath,
+                "-l", extractedImagesLimit.ToString(),
+                "-o", destDir ?? string.Empty,
+                "-i"
+            };
+            args.AddRange(inputFiles);
+
+            executor.Execute(args);
         }
     }
 }

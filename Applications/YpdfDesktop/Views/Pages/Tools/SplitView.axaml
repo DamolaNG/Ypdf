@@ -162,8 +162,23 @@
 					</i:Interaction.Behaviors>
 				</TextBlock>
 
-				<TextBox Grid.Row="0" Grid.Column="1" Text="{Binding InputFilePath}" />
-				<TextBox Grid.Row="2" Grid.Column="1" Text="{Binding OutputDirectoryPath}" />
+				<DockPanel Grid.Row="0" Grid.Column="1">
+					<Button DockPanel.Dock="Right"
+							img:Attached.Icon="fa-folder-open"
+							Margin="0, 0, 5, 0"
+							ToolTip.Tip="{Binding SettingsVM.Locale.File}"
+							Command="{Binding SelectFileCommand}" />
+					<TextBox Text="{Binding InputFilePath}" />
+				</DockPanel>
+
+				<DockPanel Grid.Row="2" Grid.Column="1">
+					<Button DockPanel.Dock="Right"
+							img:Attached.Icon="fa-folder-open"
+							Margin="0, 0, 5, 0"
+							ToolTip.Tip="{Binding SettingsVM.Locale.Output}"
+							Command="{Binding SelectOutputDirectoryCommand}" />
+					<TextBox Text="{Binding OutputDirectoryPath}" />
+				</DockPanel>
 			</Grid>
 
 			<Grid Grid.Row="1" ColumnDefinitions="1*, 1*">

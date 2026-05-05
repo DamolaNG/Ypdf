@@ -1,5 +1,8 @@
-﻿using Avalonia.Media;
+﻿using Avalonia;
+using Avalonia.Media;
+using ReactiveUI;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Threading.Tasks;
 using YpdfDesktop.Infrastructure.Services;
 using YpdfDesktop.Models.Base;
@@ -16,6 +19,8 @@ namespace YpdfDesktop.Models.Informing
 
         public Task ExecutionTask { get; }
         public IEnumerable<string> InputFiles { get; }
+
+        public ReactiveCommand<Unit, Unit> CopyOutputCommand { get; }
 
         private string _inputFilesPresenter = string.Empty;
         public string InputFilesPresenter
@@ -69,6 +74,17 @@ namespace YpdfDesktop.Models.Informing
 
             InputFilesPresenter = string.Join(", ", inputFiles);
             StatusIcon = ToolInfoService.GetExecutionStatusIconName(Status);
+
+            CopyOutputCommand = ReactiveCommand.CreateFromTask(CopyOutputAsync);
+        }
+
+        private async Task CopyOutputAsync()
+        {
+            var clipboard = Application.Current?.Clipboard;
+            if (clipboard is null || string.IsNullOrEmpty(ToolOutput))
+                return;
+
+            await clipboard.SetTextAsync(ToolOutput);
         }
 
         public void MakeRunning()
